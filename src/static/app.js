@@ -32,12 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
               ${details.participants.length > 0
                 ? details.participants.map((participant) => `
                     <li class="participant-item">
-                      <span>${participant}</span>
+                      <span>${participant.name} (${participant.email}) — Grade ${participant.grade}</span>
                       <button
                         type="button"
                         class="participant-delete"
                         data-activity="${encodeURIComponent(name)}"
-                        data-email="${encodeURIComponent(participant)}"
+                        data-email="${encodeURIComponent(participant.email)}"
                         title="Remove participant"
                       >
                         ×

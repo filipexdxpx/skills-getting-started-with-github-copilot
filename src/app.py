@@ -77,6 +77,31 @@ activities = {
     }
 }
 
+students = {
+    "michael@mergington.edu": {"name": "Michael Baxter", "grade": "10"},
+    "daniel@mergington.edu": {"name": "Daniel Rivera", "grade": "11"},
+    "emma@mergington.edu": {"name": "Emma Chen", "grade": "12"},
+    "sophia@mergington.edu": {"name": "Sophia Patel", "grade": "11"},
+    "john@mergington.edu": {"name": "John Adams", "grade": "10"},
+    "olivia@mergington.edu": {"name": "Olivia Lee", "grade": "12"},
+    "alex@mergington.edu": {"name": "Alex Carter", "grade": "11"},
+    "liam@mergington.edu": {"name": "Liam Brooks", "grade": "10"},
+    "ava@mergington.edu": {"name": "Ava Johnson", "grade": "12"},
+    "isabella@mergington.edu": {"name": "Isabella Martinez", "grade": "11"},
+    "mason@mergington.edu": {"name": "Mason Torres", "grade": "10"},
+    "charlotte@mergington.edu": {"name": "Charlotte Kim", "grade": "12"},
+    "ethan@mergington.edu": {"name": "Ethan Brown", "grade": "11"},
+    "harper@mergington.edu": {"name": "Harper Reed", "grade": "10"},
+    "logan@mergington.edu": {"name": "Logan Nguyen", "grade": "12"}
+}
+
+
+def resolve_participant(email: str):
+    return {
+        "email": email,
+        **students.get(email, {"name": "Unknown Student", "grade": "Unknown"})
+    }
+
 
 @app.get("/")
 def root():
@@ -85,7 +110,15 @@ def root():
 
 @app.get("/activities")
 def get_activities():
-    return activities
+    return {
+        activity_name: {
+            "description": details["description"],
+            "schedule": details["schedule"],
+            "max_participants": details["max_participants"],
+            "participants": [resolve_participant(email) for email in details["participants"]]
+        }
+        for activity_name, details in activities.items()
+    }
 
 
 @app.post("/activities/{activity_name}/signup")
