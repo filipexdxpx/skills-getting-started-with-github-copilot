@@ -99,11 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value;
+    const grade = document.getElementById("grade").value;
     const activity = document.getElementById("activity").value;
 
     try {
       const response = await fetch(
-        `/activities/${encodeURIComponent(activity)}/signup?email=${encodeURIComponent(email)}`,
+        `/activities/${encodeURIComponent(activity)}/signup?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&grade=${encodeURIComponent(grade)}`,
         {
           method: "POST",
         }
